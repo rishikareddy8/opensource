@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,26 @@
     <title>Co-admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .tab-content {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .student-list, .request-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .student-item, .request-item {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
 
@@ -26,12 +46,80 @@
 
             <div class="tab-content mt-3">
                 <div class="tab-pane active" id="studentMgmt">
-                    <h4>Manage Students</h4>
-                    <!-- Co-admin CRUD operations for managing students -->
+                    <ul class="nav nav-tabs" id="studentMgmtTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="addStudent-tab" data-bs-toggle="tab" href="#addStudent">Add Student</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="viewStudents-tab" data-bs-toggle="tab" href="#viewStudents">View Students</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                        <!-- Add Student Tab -->
+                        <div class="tab-pane active" id="addStudent">
+                            <h5>Add Student</h5>
+                            <form id="addStudentForm">
+                                <div class="mb-3">
+                                    <label for="studentName" class="form-label">Student Name</label>
+                                    <input type="text" class="form-control" id="studentName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="studentRoll" class="form-label">Roll Number</label>
+                                    <input type="text" class="form-control" id="studentRoll" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="studentEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="studentEmail" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Student</button>
+                            </form>
+                        </div>
+                        <!-- View Students Tab -->
+                        <div class="tab-pane" id="viewStudents">
+                            <h5>View Students</h5>
+                            <ul id="studentList" class="student-list"></ul>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Requests Tab -->
                 <div class="tab-pane" id="requests">
-                    <h4>View Requests</h4>
-                    <!-- Co-admin Approve/Reject student requests -->
+                    <ul class="nav nav-tabs" id="requestsTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="readRequests-tab" data-bs-toggle="tab" href="#readRequests">Read</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="unreadRequests-tab" data-bs-toggle="tab" href="#unreadRequests">Unread</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="acceptedRequests-tab" data-bs-toggle="tab" href="#acceptedRequests">Accepted</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="declinedRequests-tab" data-bs-toggle="tab" href="#declinedRequests">Declined</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                        <!-- Read Requests Tab -->
+                        <div class="tab-pane active" id="readRequests">
+                            <h5>Read Requests</h5>
+                            <ul id="readRequestsList" class="request-list"></ul>
+                        </div>
+                        <!-- Unread Requests Tab -->
+                        <div class="tab-pane" id="unreadRequests">
+                            <h5>Unread Requests</h5>
+                            <ul id="unreadRequestsList" class="request-list"></ul>
+                        </div>
+                        <!-- Accepted Requests Tab -->
+                        <div class="tab-pane" id="acceptedRequests">
+                            <h5>Accepted Requests</h5>
+                            <ul id="acceptedRequestsList" class="request-list"></ul>
+                        </div>
+                        <!-- Declined Requests Tab -->
+                        <div class="tab-pane" id="declinedRequests">
+                            <h5>Declined Requests</h5>
+                            <ul id="declinedRequestsList" class="request-list"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,5 +128,71 @@
 
 <script src="../js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const students = [
+        { name: 'John Doe', roll: 'CS101', email: 'johndoe@example.com' },
+        { name: 'Jane Smith', roll: 'CS102', email: 'janesmith@example.com' },
+        { name: 'Jim Brown', roll: 'CS103', email: 'jimbrown@example.com' }
+    ];
+
+    const requests = {
+        read: [
+            { name: 'Alice', type: 'Read Request', date: '2024-10-10' },
+            { name: 'Bob', type: 'Read Request', date: '2024-10-09' }
+        ],
+        unread: [
+            { name: 'Charlie', type: 'Unread Request', date: '2024-10-14' }
+        ],
+        accepted: [
+            { name: 'David', type: 'Accepted Request', date: '2024-10-12' }
+        ],
+        declined: [
+            { name: 'Eve', type: 'Declined Request', date: '2024-10-11' }
+        ]
+    };
+
+    // Function to display students in the "View Students" tab
+    const displayStudents = () => {
+        const studentList = document.getElementById('studentList');
+        studentList.innerHTML = '';
+        students.forEach(student => {
+            const li = document.createElement('li');
+            li.classList.add('student-item');
+            li.textContent = `${student.name} - ${student.roll} - ${student.email}`;
+            studentList.appendChild(li);
+        });
+    };
+
+    // Function to display requests in the respective tabs
+    const displayRequests = () => {
+        Object.keys(requests).forEach(status => {
+            const listId = `${status}RequestsList`;
+            const requestList = document.getElementById(listId);
+            requestList.innerHTML = '';
+            requests[status].forEach(request => {
+                const li = document.createElement('li');
+                li.classList.add('request-item');
+                li.textContent = `${request.name} - ${request.type} - ${request.date}`;
+                requestList.appendChild(li);
+            });
+        });
+    };
+
+    // Initial display of students and requests
+    displayStudents();
+    displayRequests();
+
+    // Form submit for adding new student (dummy functionality)
+    document.getElementById('addStudentForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('studentName').value;
+        const roll = document.getElementById('studentRoll').value;
+        const email = document.getElementById('studentEmail').value;
+        students.push({ name, roll, email });
+        displayStudents(); // Refresh the student list
+        e.target.reset();
+    });
+</script>
+
 </body>
 </html>
