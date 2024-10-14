@@ -6,10 +6,31 @@
     <title>Student Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Custom style for the student image */
+        .student-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #007bff;
+            margin-bottom: 20px;
+        }
+        .student-info {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container mt-5">
+    <!-- Student Image Section -->
+    <div class="student-info">
+        <img src="https://via.placeholder.com/120" alt="Student Image" class="student-image">
+        <h3 class="mt-2">Student Name</h3>
+        <p>Program: Computer Science</p>
+    </div>
+
     <h2 class="text-center">Student Dashboard</h2>
 
     <div class="row">
@@ -80,3 +101,4 @@
 </script>
 </body>
 </html>
+
