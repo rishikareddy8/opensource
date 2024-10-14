@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">Co-admin Dashboard</h2>
+    <p><strong>Assigned Branch:</strong> Computer Science</p>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" id="coadminTabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="studentMgmt-tab" data-bs-toggle="tab" href="#studentMgmt">Student Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="requests-tab" data-bs-toggle="tab" href="#requests">Requests</a>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3">
+                <div class="tab-pane active" id="studentMgmt">
+                    <h4>Manage Students</h4>
+                    <!-- Co-admin CRUD operations for managing students -->
+                </div>
+                <div class="tab-pane" id="requests">
+                    <h4>View Requests</h4>
+                    <!-- Co-admin Approve/Reject student requests -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
