@@ -19,4 +19,64 @@
                     <a class="nav-link active" id="request-tab" data-bs-toggle="tab" href="#request">Request Permission</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="history-tab" data
+                    <a class="nav-link" id="history-tab" data-bs-toggle="tab" href="#history">History</a>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3" id="studentTabsContent">
+                <!-- Request Permission Tab -->
+                <div class="tab-pane fade show active" id="request" role="tabpanel" aria-labelledby="request-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Send a Request</h5>
+                            <form id="requestForm">
+                                <!-- Text Area for Writing the Request -->
+                                <div class="mb-3">
+                                    <label for="requestText" class="form-label">Your Request</label>
+                                    <textarea class="form-control" id="requestText" rows="4" placeholder="Write your request here..."></textarea>
+                                </div>
+                                <!-- Buttons for Send and Draft -->
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-success" id="sendRequestBtn">Send</button>
+                                    <button type="button" class="btn btn-secondary" id="draftRequestBtn">Save as Draft</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Tab -->
+                <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                    <!-- History Content (you can add specific content here later) -->
+                    <h5 class="card-title">Request History</h5>
+                    <p>No requests made yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('sendRequestBtn').addEventListener('click', function() {
+        const requestText = document.getElementById('requestText').value;
+        if(requestText.trim() === "") {
+            alert("Please enter a request before sending.");
+        } else {
+            // Handle sending the request (e.g., via an API or backend)
+            alert("Request sent: " + requestText);
+        }
+    });
+
+    document.getElementById('draftRequestBtn').addEventListener('click', function() {
+        const requestText = document.getElementById('requestText').value;
+        if(requestText.trim() === "") {
+            alert("Please enter a request before saving as a draft.");
+        } else {
+            // Handle saving the draft (e.g., localStorage or backend)
+            alert("Request saved as draft.");
+        }
+    });
+</script>
+</body>
+</html>
